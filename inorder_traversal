@@ -1,0 +1,82 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ * 
+ * typedef struct TreeNode treenode;
+ * 
+ * treenode* treenode_new(int val) {
+ *     treenode* node = (treenode *) malloc(sizeof(treenode));
+ *     node->val = val;
+ *     node->left = NULL;
+ *     node->right = NULL;
+ *     return node;
+ * }
+ */
+/**
+ * @input A : Root pointer of the tree 
+ * 
+ * @Output Integer array. You need to malloc memory, and fill the length in len1
+ */
+ struct stack 
+ {
+    treenode* data;
+    struct stack *next;
+ };
+ 
+ void push(struct stack **head, treenode* d)
+ {
+    struct stack *node = (struct stack *)malloc(sizeof(struct stack));
+    node->next = *head;
+    node->data = d;
+    *head = node;
+ }
+ 
+ void pop(struct stack **head)
+ {
+    struct stack *curr=*head;
+    *head=curr->next;
+ }
+ 
+ treenode* top(struct stack **head)
+ {
+     struct stack *curr = *head;
+     return curr->data;
+ }
+ 
+ int isempty(struct stack **head)
+ {
+     if(*head)
+        return 0;
+    return 1;
+ }
+ 
+int* inorderTraversal(treenode* A, int *len1) 
+{
+    struct stack *st=NULL;
+    treenode* curr=A;
+    int *arr = (int *)malloc(sizeof(int)*999999);
+    treenode* temp=NULL;
+    int i=0;
+    
+    while(curr || !isempty(&st))
+    {
+        while(curr)
+        {
+            push(&st,curr);
+            curr=curr->left;
+        }
+        temp=top(&st);
+        pop(&st);
+        arr[i]=temp->val;
+        i++;
+        curr=temp->right;
+    }
+    *len1=i;
+    
+    return arr;
+    
+}
