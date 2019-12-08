@@ -1,0 +1,55 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ * 
+ * typedef struct TreeNode treenode;
+ * 
+ * treenode* treenode_new(int val) {
+ *     treenode* node = (treenode *) malloc(sizeof(treenode));
+ *     node->val = val;
+ *     node->left = NULL;
+ *     node->right = NULL;
+ *     return node;
+ * }
+ */
+/**
+ * @input A : Integer array
+ * @input n1 : Integer array's ( A ) length
+ * @input B : Integer array
+ * @input n2 : Integer array's ( B ) length
+ * 
+ * @Output root pointer of tree.
+ */
+int search(int A[], int start, int end, int k)
+{
+    int i=0;
+    for(i=start;i<=end;i++)
+    {
+        if(A[i]==k)
+            return i;
+    }
+}
+ 
+treenode* createTree(int pre[] , int in[] , int start , int end , int *index)
+{
+    if(start>end)
+        return NULL;
+    int i = search(in,start,end,pre[(*index)++]);
+    treenode* newnode = (treenode *)malloc(sizeof(treenode));
+    newnode->val=in[i];
+    newnode->left = createTree(pre,in,start,i-1,index);
+    newnode->right = createTree(pre,in,i+1,end,index);
+    return newnode;
+}
+ 
+treenode* buildTree(int *A, int n1, int *B, int n2)
+{
+    int c=0;
+    return createTree(A,B,0,n2-1,&c);
+}
+ 
+ 
