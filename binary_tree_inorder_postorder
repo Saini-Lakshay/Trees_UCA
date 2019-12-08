@@ -1,0 +1,83 @@
+/**
+ * Definition for binary tree
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ * 
+ * typedef struct TreeNode treenode;
+ * 
+ * treenode* treenode_new(int val) {
+ *     treenode* node = (treenode *) malloc(sizeof(treenode));
+ *     node->val = val;
+ *     node->left = NULL;
+ *     node->right = NULL;
+ *     return node;
+ * }
+ */
+/**
+ * @input A : Integer array
+ * @input n1 : Integer array's ( A ) length
+ * @input B : Integer array
+ * @input n2 : Integer array's ( B ) length
+ * 
+ * @Output root pointer of tree.
+ */
+int search(int A[],int start, int end , int k)
+{
+    int i=0;
+    for(i=start;i<=end;i++)
+    {
+        if(A[i]==k)
+            return i;
+    }
+    return -1;
+}
+treenode* createTree(int A[],int B[],int start,int end, int *index)
+{
+    if(start>end)
+    {
+        return NULL;
+    }
+    
+    int i=search(A,start,end,B[(*index)--]);
+    treenode* newnode = (treenode*)malloc(sizeof(treenode));
+    newnode->val=A[i];
+    newnode->right-createTree(A,B,i+1,end,index);
+    newnode->left=createTree(A,B,start,i-1,index);
+    return newnode;
+}
+treenode* buildTree(int* A, int n1, int* B, int n2) {
+    int c=n2-1;
+    return createTree(A,B,0,c,&c);
+}
+/* int search(int A[],int start,int end,int k)
+ {
+     int i = 0;
+     for(i=start;i<=end;i++)
+     {
+         if(A[i] == k)
+            return i;
+     }
+     return -1;
+ }
+treenode* createTree(int A[],int B[],int start,int end,int *index)
+{
+    if(start > end)
+    {
+        return NULL;
+    }
+        
+    int i = search(A,start,end,B[(*index)--]);
+    treenode* newnode = (treenode*)malloc(sizeof(treenode));
+    newnode->val = A[i];
+    newnode->right = createTree(A,B,i+1,end,index);
+    newnode->left = createTree(A,B,start,i-1,index);
+    return newnode;
+}
+treenode* buildTree(int* A, int n1, int* B, int n2) 
+{
+    int c = n2-1;
+    return createTree(A,B,0,c,&c);
+}*/
